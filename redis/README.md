@@ -11,6 +11,14 @@
 ## 1. SDS simple dynamic string
 ### 1.1 数据结构定义（64位）如下：
 ```c
+
+// 这里还有对对于字符串的优化，
+// 5 暂时还没有用
+struct __attribute__ ((__packed__)) sdshdr5 {}
+struct __attribute__ ((__packed__)) sdshdr8 {}
+struct __attribute__ ((__packed__)) sdshdr16 {}
+struct __attribute__ ((__packed__)) sdshdr32 {}
+
 struct __attribute__ ((__packed__)) sdshdr64 {
     uint64_t len; /* used */    // buf中使用了的长度
     uint64_t alloc; /* excluding the header and null terminator */ // buf分配的实际内存大小
@@ -239,7 +247,51 @@ typedef struct quicklistEntry {
         void *ptr;
     } robj;
 ```
+## 2. redis的五种基本数据类型
+### 2.1 字符串
+用到的数据结构，SDS这里有一个 sbm->raw 的转化， 6.x的版本为 45个字节的长度为界限
+### 2.2 列表
+底层实现，双向链表+压缩链表
+### 2.3 集合
+底层实现，intset（数字集合）或者hashtable（哈希表）
+### 2.4 有序集合
+底层实现：skiplist加上hashtable
+### 2.5 hash
+既是一个hashtable或者ziplist
+转化过程：       
+    当哈希对象可以同时满足以下两个条件时，哈希对象使用ziplist编码:哈希对象保存的所有键值对的键和值的字符串长度都小于64字节;       
+    哈希对象保存的键值对数量小于512个;不能满足这两个条件的哈希对象需要使用       
+    hashtable 编码。       
 
+
+## 3. 持久化
+### 3.1 rbd
+
+### 3.2 aof
+同上，不过里面有个命令缓冲区
+## 4. 多机模式
+
+### 4.1 主从
+里面主要是对重新选取主服务器的时候数据备份的时候有一个处理
+
+### 4.2 sentinel
+
+raft算法选取头sentinel
+
+### 4.3 cluster（集群模式）
+
+gossip算法进行消息传播
+
+## 5 其他
+发布订阅
+事务
+lua脚本
+排序
+位图
+慢查询日志
+监视器
+## 6 bloom filter 
+## 7 epoll 及其源码模型
 
         
         
