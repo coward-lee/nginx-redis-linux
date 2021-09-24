@@ -6,7 +6,7 @@
     3. redis 的线程模型（或者说进程模型），网络I/O使用的时单线程模式
     4. bloom过滤器，缓存穿透，缓存击穿
     5. redis的扩容和缩容
-
+    6. 使用redis来实现分布式锁，以及使用分布式锁需要处理的问题，以及再遇到不同的redis形式的时候出现的问题以及解决方案
 # 一、redis 的底层基本数据结构
 ## 1. SDS simple dynamic string
 ### 1.1 数据结构定义（64位）如下：
@@ -164,7 +164,7 @@ typedef struct {
 } ziplistEntry;
 ```      
 ### 6.2. 示意图如下
-            ![ziplist](ziplist.png)
+![ziplist](ziplist.png)
         3. 简单解释
 ## 7. 快表
 ### 7.1 数据结构定义
