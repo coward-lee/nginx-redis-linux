@@ -3,7 +3,10 @@
 问题：     
     1. epoll时间的注册流程 看epoll_ctl      
     2. epoll唤醒机制（linux-2.6.32.20/fs/eventpoll.c 下面的 ep_poll_callback 函数，该函数时注册在epoll文件的回调函数，他是触发是由网络中断出发的）
-    3.
+    3. epoll的连接过期怎么实现的，这个有一个红黑树的应用
+    4. epoll的是事件处理流程
+    5. 
+    
 ```c  
 
 struct eventpoll {
